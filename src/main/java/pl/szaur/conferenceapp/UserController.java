@@ -18,4 +18,10 @@ public class UserController {
         userService.addUser(userdto);
         return true;
     }
+
+    @PostMapping("/updateEmail")
+    public boolean updateEmail(@RequestBody UserDTO userDTO){
+        return userService.updateEmail(userDTO);
+    }
+
 }
