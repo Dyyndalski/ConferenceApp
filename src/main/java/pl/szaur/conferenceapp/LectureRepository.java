@@ -2,6 +2,5 @@ package pl.szaur.conferenceapp;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-
+public interface LectureRepository extends JpaRepository<Lecture, Long> {
 }
