@@ -1,9 +1,6 @@
 package pl.szaur.conferenceapp;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -12,6 +9,7 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
+@AllArgsConstructor
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,7 +27,9 @@ public class Lecture {
     Set<User> users = new HashSet<>();
 
     public void addUser(User user){
+        if(users == null)
+            this.users = new HashSet<>();
+
         this.users.add(user);
-        user.getLectures().add(this);
     }
 }
