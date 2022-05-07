@@ -1,17 +1,16 @@
 package pl.szaur.conferenceapp;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
+@AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Entity
+@Builder
 @Table(name = "user")
 public class User {
     @Id
@@ -28,6 +27,13 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "lecture_id")
     )
-
     Set<Lecture> lectures = new HashSet<>();
+
+    public void addLecture(Lecture lecture){
+        //TODO
+        if(lectures == null)
+            this.lectures = new HashSet<>();
+
+        this.lectures.add(lecture);
+    }
 }

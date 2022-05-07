@@ -10,19 +10,13 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
-public class UserController {
+public class LectureController {
 
     @Autowired
-    UserService userService;
+    LectureService lectureService;
 
-    @PostMapping("/save")
-    public boolean register(@RequestBody UserDTO userdto){
-        userService.addUser(userdto);
-        return true;
-    }
-
-    @PostMapping("/updateEmail")
-    public boolean updateEmail(@RequestBody UserDTO userDTO){
-        return userService.updateEmail(userDTO);
+    @PostMapping("/conferencePlan")
+    public List<LectureDTO> getConferencePlan(@RequestBody UserDTO userDTO){
+        return lectureService.getConferencePlan();
     }
 }
