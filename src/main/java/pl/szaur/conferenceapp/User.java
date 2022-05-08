@@ -29,11 +29,11 @@ public class User {
     )
     Set<Lecture> lectures = new HashSet<>();
 
-    public void addLecture(Lecture lecture){
-        //TODO
-        if(lectures == null)
-            this.lectures = new HashSet<>();
-
-        this.lectures.add(lecture);
-    }
+//    public void addLecture(Lecture lecture){
+//        //TODO
+//        if(lectures == null)
+//            this.lectures = new HashSet<>();
+//
+//        this.lectures.add(lecture);
+//    }
 }

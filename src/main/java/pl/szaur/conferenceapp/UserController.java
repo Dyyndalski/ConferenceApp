@@ -13,9 +13,8 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/save")
-    public boolean register(@RequestBody UserDTO userdto){
-        userService.addUser(userdto);
-        return true;
+    public String register(@RequestBody UserDTO userdto){
+        return userService.addUser(userdto);
     }
 
     @PostMapping("/updateEmail")
