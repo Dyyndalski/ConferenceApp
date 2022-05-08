@@ -3,6 +3,12 @@ package pl.szaur.conferenceapp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +38,7 @@ public class UserService {
             }else if(checkFreePlaces(userDTO)){
 
                 saveUser(userDTO);
+                sendPseudoEmail(userDTO);
                 return "Dodano użytkownika i zapisano na wykład.";
             }else{
                 return "Brak wolnych miejsc na wybraną prelekcje.";
@@ -157,7 +164,18 @@ public class UserService {
         return "Nie ma takiego użytkownika.";
     }
 
+    public void sendPseudoEmail(UserDTO userDTO){
 
+        try(FileWriter fileWriter = new FileWriter("powiadomienia.txt", true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            PrintWriter printWriter = new PrintWriter(bufferedWriter))
+        {
+            String message = "Data:" + LocalDateTime.now() + "\n" + "email:" + userDTO.getEmail()
+                    + "\n" + "Zostałeś pomyślnie zapisany na konferencje!" + "\n";
+            printWriter.println(message);
 
-
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
 }
