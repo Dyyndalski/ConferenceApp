@@ -177,5 +177,15 @@ public class UserService {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+
+    public List<UserDTO> getUsers() {
+        return userRepository.findAll().stream().map(user -> {
+            return UserDTO.builder()
+                    .id(user.getId())
+                    .login(user.getLogin())
+                    .email(user.getEmail())
+                    .build();
+        }).collect(Collectors.toList());
+
     }
 }

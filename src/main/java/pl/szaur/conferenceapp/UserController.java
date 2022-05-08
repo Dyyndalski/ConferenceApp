@@ -32,5 +32,8 @@ public class UserController {
         return userService.cancelReservation(userdto);
     }
 
-
+    @GetMapping("/getUsers")
+    public List<UserDTO> getUsers(){
+        return userService.getUsers();
+    }
 }
