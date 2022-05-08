@@ -26,10 +26,10 @@ public class Lecture {
     @ManyToMany (mappedBy = "lectures")
     Set<User> users = new HashSet<>();
 
-    public void addUser(User user){
-        if(users == null)
-            this.users = new HashSet<>();
-
-        this.users.add(user);
-    }
+//    public void addUser(User user){
+//        if(users == null)
+//            this.users = new HashSet<>();
+//
+//        this.users.add(user);
+//    }
 }
