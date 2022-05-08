@@ -134,4 +134,30 @@ public class UserService {
         }
         return null;
     }
+
+    public String cancelReservation(UserDTO userDTO) {
+
+        Optional<User> user = userRepository.findUserByLogin(userDTO.getLogin());
+
+        if(user.isPresent()) {
+            List<Lecture> lectures = lectureRepository.findAllLecturesByUsers(user.get()).stream()
+                    .filter(lecture -> lecture.getId() == userDTO.getConferenceIndex())
+                    .collect(Collectors.toList());
+
+            if(lectures.isEmpty()) {
+                return "Uzytkownik nie ma rezerwacji na wybrana prelekcje";
+            }else{
+                 lectures.forEach(lectureToDelete -> {
+                    user.get().removeLecture(lectureToDelete);
+                    userRepository.save(user.get());
+                });
+                 return "Anulowano rezerwacje.";
+            }
+        }
+        return "Nie ma takiego użytkownika.";
+    }
+
+
+
+
 }

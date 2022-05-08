@@ -26,4 +26,11 @@ public class UserController {
     public List<LectureDTO> getLecturesByLogin(@PathVariable String login){
         return userService.getLecturesByLogin(login);
     }
+
+    @PostMapping("/cancel")
+    public String cancel(@RequestBody UserDTO userdto){
+        return userService.cancelReservation(userdto);
+    }
+
+
 }

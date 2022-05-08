@@ -27,7 +27,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "lecture_id")
     )
-    Set<Lecture> lectures = new HashSet<>();
+    Set<Lecture> lectures = new HashSet<Lecture>();
 
 //    public void addLecture(Lecture lecture){
 //        //TODO
@@ -36,4 +36,10 @@ public class User {
 //
 //        this.lectures.add(lecture);
 //    }
+
+    public void removeLecture(Lecture lecture){
+        this.lectures.remove(lecture);
+        lecture.getUsers().remove(this);
+    }
+
 }
