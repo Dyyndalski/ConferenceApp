@@ -7,8 +7,10 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +30,7 @@ public class UserService {
             if (CheckExistsByLoginAndEmail(userDTO)){
                 if(checkThatUserIsOnChosenLecture(userDTO))
                     return "Jesteś już zapisany na tą prelekcje.";
-
+                checkUserTime(userDTO);
                 addUserToLecture(userDTO);
                 return "Pomyślnie zapisano na prelekcje.";
 
@@ -164,12 +166,11 @@ public class UserService {
         return "Nie ma takiego użytkownika.";
     }
 
-    public void sendPseudoEmail(UserDTO userDTO){
+    public void sendPseudoEmail(UserDTO userDTO) {
 
-        try(FileWriter fileWriter = new FileWriter("powiadomienia.txt", true);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            PrintWriter printWriter = new PrintWriter(bufferedWriter))
-        {
+        try (FileWriter fileWriter = new FileWriter("powiadomienia.txt", true);
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+             PrintWriter printWriter = new PrintWriter(bufferedWriter)) {
             String message = "Data:" + LocalDateTime.now() + "\n" + "email:" + userDTO.getEmail()
                     + "\n" + "Zostałeś pomyślnie zapisany na konferencje!" + "\n";
             printWriter.println(message);
@@ -177,6 +178,7 @@ public class UserService {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+    }
 
     public List<UserDTO> getUsers() {
         return userRepository.findAll().stream().map(user -> {
@@ -186,6 +188,22 @@ public class UserService {
                     .email(user.getEmail())
                     .build();
         }).collect(Collectors.toList());
+    }
 
+    public boolean checkUserTime(UserDTO userDTO){
+
+        for(Lecture lecture : lectureRepository.findAllLecturesByUsers(getUser(userDTO))){
+            LocalTime startTime = getLecture(userDTO).getStartTime();
+            LocalTime endTime = getLecture(userDTO).getEndTime();
+
+            LocalTime startTimeLecture = lecture.getStartTime();
+            LocalTime endTimeLecture = lecture.getEndTime();
+
+            if(startTime.isAfter(startTimeLecture) || endTime.isAfter(startTimeLecture)
+                && (startTime.isBefore(endTimeLecture) || endTime.isBefore(endTimeLecture))) {
+                return false;
+            }
+        }
+        return true;
     }
 }
