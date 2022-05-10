@@ -32,6 +32,7 @@ public class LectureService {
                     .startTime(lecture.getStartTime())
                     .endTime(lecture.getEndTime())
                     .topicPathIndex(lecture.getTopic().getId())
+                    .pathName(lecture.getTopic().getTopicName())
                     .build();
         }).collect(Collectors.toList());
     }
@@ -84,9 +85,8 @@ public class LectureService {
             return StatisticTopicDTO.builder()
                     .topicID(element)
                     .topic(topicRepository.getById(element).getTopic().getTopicName())
-                    .percentOfUsers(Float.valueOf(statisticMap.get(element))/Float.valueOf(numberOfUsers) * 100.0f)
+                    .percentOfUsers(numberOfUsers != 0 ? Float.valueOf(statisticMap.get(element))/Float.valueOf(numberOfUsers) * 100.0f : 0.0f)
                     .build();
         }).collect(Collectors.toList());
-
     }
 }
