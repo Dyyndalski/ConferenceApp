@@ -1,4 +1,4 @@
-package pl.szaur.conferenceapp;
+package pl.szaur.conferenceapp.Model;
 
 import lombok.*;
 

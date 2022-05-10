@@ -1,6 +1,7 @@
-package pl.szaur.conferenceapp;
+package pl.szaur.conferenceapp.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import pl.szaur.conferenceapp.Model.User;
 
 import java.util.Optional;
 

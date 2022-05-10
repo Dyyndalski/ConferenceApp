@@ -1,4 +1,4 @@
-package pl.szaur.conferenceapp;
+package pl.szaur.conferenceapp.DTO;
 
 import lombok.Builder;
 import lombok.Data;

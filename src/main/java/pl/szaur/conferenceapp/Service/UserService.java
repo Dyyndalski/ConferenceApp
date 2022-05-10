@@ -1,16 +1,20 @@
-package pl.szaur.conferenceapp;
+package pl.szaur.conferenceapp.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.szaur.conferenceapp.DTO.LectureDTO;
+import pl.szaur.conferenceapp.DTO.UserDTO;
+import pl.szaur.conferenceapp.Model.Lecture;
+import pl.szaur.conferenceapp.Repository.LectureRepository;
+import pl.szaur.conferenceapp.Repository.UserRepository;
+import pl.szaur.conferenceapp.Model.User;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -138,6 +142,7 @@ public class UserService {
                         .name(lecture.getName())
                         .startTime(lecture.getStartTime())
                         .endTime(lecture.getEndTime())
+
                         .build();
             }).collect(Collectors.toList());
         }

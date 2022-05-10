@@ -1,10 +1,8 @@
-package pl.szaur.conferenceapp;
+package pl.szaur.conferenceapp.Model;
 
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +14,7 @@ import java.util.Set;
 @Entity
 @Table(name = "lecture")
 public class Lecture {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,6 +24,10 @@ public class Lecture {
 
     @ManyToMany (mappedBy = "lectures")
     Set<User> users = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(columnDefinition = "lecture_path_topics_id")
+    Topic topic;
 
 //    public void addUser(User user){
 //        if(users == null)
