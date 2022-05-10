@@ -16,17 +16,17 @@ public class LectureController {
     @Autowired
     LectureService lectureService;
 
-    @PostMapping("/conferencePlan")
+    @GetMapping("/lecture-managment/conf-plan")
     public List<LectureDTO> getConferencePlan(){
         return lectureService.getConferencePlan();
     }
 
-    @GetMapping("/statisticsLectures")
+    @GetMapping("/lecture-managment/stat-lectures")
     public List<StatisticLectureDTO> getStatisticsEveryLecture(){
         return lectureService.getStatisticsEveryLecture();
     }
 
-    @GetMapping("/statisticsTopics")
+    @GetMapping("/lecture-managment/stat-topics")
     public List<StatisticTopicDTO> getStatisticsEveryTopic(){
         return lectureService.getStatisticsEveryTopic();
     }

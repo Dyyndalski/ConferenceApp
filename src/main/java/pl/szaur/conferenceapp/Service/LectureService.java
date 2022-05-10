@@ -47,8 +47,10 @@ public class LectureService {
         Long numberOfUsers = numberOfUsersInEveryLecture.stream().reduce(0L, Long::sum);
 
         List<Float> percentOfUsers = numberOfUsersInEveryLecture.stream().map(x -> x.floatValue()).map(x -> {
-            System.out.println(x);
-            return x = x/((float)numberOfUsers) * 100.0f;
+            if(numberOfUsers != 0)
+                return x = x/((float)numberOfUsers) * 100.0f;
+            else
+                return 0.0f;
         }).collect(Collectors.toList());
 
         return IntStream.range(0, allLectures.size()).mapToObj(i -> {
@@ -65,20 +67,24 @@ public class LectureService {
         Map<Long, Long> statisticMap = new HashMap<>();
 
         lectureRepository.findAll().stream().forEach(element -> {
-            if(statisticMap.containsKey(element.topic.getId())){
-                statisticMap.put(element.topic.getId(), statisticMap.get(element.topic.getId()) + element.getUsers().stream().count());
+            if(statisticMap.containsKey(element.getTopic().getId())){
+                statisticMap.put(element.getTopic().getId(), statisticMap.get(element.getTopic().getId()) + element.getUsers().stream().count());
             }else{
-                statisticMap.put(element.topic.getId(), element.getUsers().stream().count());
+                statisticMap.put(element.getTopic().getId(), element.getUsers().stream().count());
+                System.out.println(element.getUsers().stream().count());
             }
         });
 
+        System.out.println(statisticMap);
+
         Long numberOfUsers = statisticMap.values().stream().reduce(0L, Long::sum);
+
 
         return statisticMap.entrySet().stream().map(Map.Entry::getKey).map(element -> {
             return StatisticTopicDTO.builder()
                     .topicID(element)
                     .topic(topicRepository.getById(element).getTopic().getTopicName())
-                    .percentOfUsers(Float.valueOf(statisticMap.get(element))/Float.valueOf(numberOfUsers) * 100)
+                    .percentOfUsers(Float.valueOf(statisticMap.get(element))/Float.valueOf(numberOfUsers) * 100.0f)
                     .build();
         }).collect(Collectors.toList());
 

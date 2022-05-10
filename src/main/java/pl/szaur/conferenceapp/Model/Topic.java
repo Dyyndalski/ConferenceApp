@@ -18,5 +18,5 @@ public class Topic {
     private String topicName;
 
     @OneToMany(mappedBy= "topic")
-    List<Lecture> lectures;
+    private List<Lecture> lectures;
 }

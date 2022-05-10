@@ -14,7 +14,6 @@ import java.util.Set;
 @Entity
 @Table(name = "lecture")
 public class Lecture {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,11 +22,11 @@ public class Lecture {
     private LocalTime endTime;
 
     @ManyToMany (mappedBy = "lectures")
-    Set<User> users = new HashSet<>();
+    private Set<User> users = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(columnDefinition = "lecture_path_topics_id")
-    Topic topic;
+    private Topic topic;
 
 //    public void addUser(User user){
 //        if(users == null)
