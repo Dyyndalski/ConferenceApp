@@ -1,7 +1,10 @@
-package pl.szaur.conferenceapp;
+package pl.szaur.conferenceapp.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pl.szaur.conferenceapp.DTO.LectureDTO;
+import pl.szaur.conferenceapp.DTO.UserDTO;
+import pl.szaur.conferenceapp.Service.UserService;
 
 import java.util.List;
 

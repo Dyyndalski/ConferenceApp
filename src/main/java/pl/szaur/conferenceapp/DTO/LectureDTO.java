@@ -1,7 +1,9 @@
-package pl.szaur.conferenceapp;
+package pl.szaur.conferenceapp.DTO;
 
 import lombok.Builder;
 import lombok.Data;
+
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalTime;
 
 @Builder
@@ -11,4 +13,5 @@ public class LectureDTO {
     private String name;
     private LocalTime startTime;
     private LocalTime endTime;
+    private Long topicPathIndex;
 }
