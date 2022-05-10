@@ -117,7 +117,7 @@ public class UserService {
     private Boolean checkFreePlaces(UserDTO userDTO) {
         Optional<Lecture> byId = lectureRepository.findById(userDTO.getConferenceIndex());
 
-        return byId.get().getUsers().stream().count() == 5 ? false : true;
+        return byId.get().getUsers().size() == 5 ? false : true;
     }
 
     public boolean updateEmail(UserDTO userDTO) {
@@ -140,7 +140,6 @@ public class UserService {
                         .name(lecture.getName())
                         .startTime(lecture.getStartTime())
                         .endTime(lecture.getEndTime())
-
                         .build();
             }).collect(Collectors.toList());
         }

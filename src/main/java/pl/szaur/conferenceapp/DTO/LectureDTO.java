@@ -14,4 +14,6 @@ public class LectureDTO {
     private LocalTime startTime;
     private LocalTime endTime;
     private Long topicPathIndex;
+    private String pathName;
 }
+
