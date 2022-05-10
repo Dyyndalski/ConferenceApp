@@ -121,12 +121,10 @@ public class UserService {
     }
 
     public boolean updateEmail(UserDTO userDTO) {
-        if(userRepository.findUserByLogin(userDTO.getLogin()).isPresent()){
-            User user = User.builder()
-                    .email(userDTO.getEmail())
-                    .build();
-            userRepository.save(user);
-
+        Optional<User> userByLogin = userRepository.findUserByLogin(userDTO.getLogin());
+        if(userByLogin.isPresent()){
+            userByLogin.get().setEmail(userDTO.getEmail());
+            userRepository.save(userByLogin.get());
             return true;
         }
         return false;
