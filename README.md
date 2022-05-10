@@ -17,11 +17,17 @@ To see the DataBase: <http://localhost:8080/h2-console>
 
 
 ## The app defines following CRUD APIs.
-
-*	Adding user to lecture:
+*	Add user to lecture:
 
 `
-POST /user-managment/email
+POST /user-managment/user
+`
+
+
+*	Update user email:
+
+`
+PATCH /user-managment/email
 `
 
 *	Getting lectures attended by user login:
