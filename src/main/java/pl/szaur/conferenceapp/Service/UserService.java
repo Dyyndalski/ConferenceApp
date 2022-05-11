@@ -31,12 +31,17 @@ public class UserService {
     public String addUser(UserDTO userDTO) {
 
         if (CheckLectureExist(userDTO)) {
-            if (CheckExistsByLoginAndEmail(userDTO)){
-                if(checkThatUserIsOnChosenLecture(userDTO))
+            if (CheckExistsByLoginAndEmail(userDTO)) {
+                if (checkThatUserIsOnChosenLecture(userDTO))
                     return "Jesteś już zapisany na tą prelekcje.";
-                checkUserTime(userDTO);
+                if (!checkUserTime(userDTO))
+                    return "Jesteś zapisany na inną konferencje w tym samym czasie";
                 addUserToLecture(userDTO);
                 return "Pomyślnie zapisano na prelekcje.";
+
+//additional function not to allow add more than 1 user by the same email
+            }else if(CheckExistsByEmail(userDTO)){
+                return "Istnieje już użytkownik z podanym mailem";
 
             }else if(CheckExistsByLogin(userDTO)) {
                 return "Podany login jest już zajęty.";
@@ -51,6 +56,13 @@ public class UserService {
             }
         }
         return "Nie ma takiego wykładu.";
+    }
+
+    private boolean CheckExistsByEmail(UserDTO userDTO) {
+        if(userRepository.existsByEmail(userDTO.getEmail())){
+            return true;
+        }
+        return false;
     }
 
     private boolean CheckLectureExist(UserDTO userDTO) {
@@ -158,11 +170,11 @@ public class UserService {
             if(lectures.isEmpty()) {
                 return "Uzytkownik nie ma rezerwacji na wybrana prelekcje";
             }else{
-                 lectures.forEach(lectureToDelete -> {
+                lectures.forEach(lectureToDelete -> {
                     user.get().removeLecture(lectureToDelete);
                     userRepository.save(user.get());
                 });
-                 return "Anulowano rezerwacje.";
+                return "Anulowano rezerwacje.";
             }
         }
         return "Nie ma takiego użytkownika.";
@@ -201,8 +213,8 @@ public class UserService {
             LocalTime startTimeLecture = lecture.getStartTime();
             LocalTime endTimeLecture = lecture.getEndTime();
 
-            if(startTime.isAfter(startTimeLecture) || endTime.isAfter(startTimeLecture)
-                && (startTime.isBefore(endTimeLecture) || endTime.isBefore(endTimeLecture))) {
+            if((startTime.isAfter(startTimeLecture) || endTime.isAfter(startTimeLecture))
+                    && (startTime.isBefore(endTimeLecture) || endTime.isBefore(endTimeLecture))) {
                 return false;
             }
         }
